@@ -7,6 +7,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
@@ -21,6 +27,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    String TAG = "demo";
+    SeekBar sb;
+    RadioGroup rg;
+    EditText search;
 
     Tracks track;
 
@@ -28,6 +38,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        search = findViewById(R.id.editText);
+
+        sb = findViewById(R.id.seekBar);
+        sb.setMax(25);
+        sb.setMin(5);
+
+        rg=(RadioGroup)findViewById(R.id.radioGroup);
+        final String[] radioValue=new String[1];
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = findViewById(checkedId);
+                radioValue[0] = rb.getText().toString();
+                Log.d(TAG, "onCheckedChanged: "+checkedId);
+            }
+            });
+
+
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "seekbar val: "+sb.getProgress()+" Radio selected "+radioValue[0] + "search "+search.getText().toString());
+            }
+        });
 
         if(isConnected())
         {
@@ -38,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "Not Connected", Toast.LENGTH_SHORT).show();
         }
+        }
 
 
-    }
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -52,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private class GetMusicData extends AsyncTask<String, Void, ArrayList<Tracks>>{
+
+     private class GetMusicData extends AsyncTask<String, Void, ArrayList<Tracks>>{
 
         @Override
         protected ArrayList<Tracks> doInBackground(String... strings) {

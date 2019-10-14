@@ -6,4 +6,13 @@
     <string name="rbTrack">Track Rating</string>
     <string name="rbArtist">Artist Rating</string>
     <string name="tvResults">Search Results</string>
+    <string name="edittext">Type  here</string>
+    <string name="tvTrack">Track:</string>
+    <string name="tvtv">track</string>
+    <string name="tvAlbum">Album:</string>
+    <string name="tvAlVal">album</string>
+    <string name="tvArtist">Artist:</string>
+    <string name="tvArtVal">artist</string>
+    <string name="tvDate">Date:</string>
+    <string name="tvdv">date</string>
 </resources>
