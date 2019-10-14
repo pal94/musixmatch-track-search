@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MusixMatch Track Search</string>
+    <string name="tvLimit">Limit: 25</string>
+    <string name="button">Search</string>
+    <string name="tvSort">Sort by:</string>
+    <string name="rbTrack">Track Rating</string>
+    <string name="rbArtist">Artist Rating</string>
+    <string name="tvResults">Search Results</string>
 </resources>
