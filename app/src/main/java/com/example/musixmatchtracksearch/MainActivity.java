@@ -33,11 +33,17 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     String TAG = "demo";
     SeekBar sb;
-    RadioGroup rg;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
     EditText search;
+    ListView listView;
+    String q;
+    int page_size;
+    String s_artist_rating;
+    String s_track_rating;
 
     Tracks track;
-    ListView lvMusic;
+
     ArrayList<Tracks> track_list;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -46,41 +52,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvMusic = findViewById(R.id.lvmusic);
+        listView = findViewById(R.id.listView);
 
 
         search = findViewById(R.id.editText);
+        radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
 
         sb = findViewById(R.id.seekBar);
         sb.setMax(25);
         sb.setMin(5);
 
-        rg = (RadioGroup) findViewById(R.id.radioGroup);
-        final String[] radioValue = new String[1];
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rb = findViewById(checkedId);
-                radioValue[0] = rb.getText().toString();
-                Log.d(TAG, "onCheckedChanged: " + checkedId);
-            }
-        });
-
-
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "seekbar val: " + sb.getProgress() + " Radio selected " + radioValue[0] + "search " + search.getText().toString());
-            }
-        });
-
-        if (isConnected()) {
+        if(isConnected())
+        {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-            new GetMusicData().execute("http://api.musixmatch.com/ws/1.1/track.search?apikey=c5e3fa46c199ae2f03e00d0ed57663cf");
+            findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    radioButton = (RadioButton) findViewById(selectedId);
+                    q = search.getText().toString();
+                    page_size=sb.getProgress();
+                    Log.d(TAG, "seekbar val: "+sb.getProgress()+" Radio selected "+radioButton.getText() + "search "+search.getText().toString());
+
+                    new GetMusicData().execute("http://api.musixmatch.com/ws/1.1/track.search?"+q+"&"+page_size+"&"+s_artist_rating+"&"+s_track_rating+"&"+"apikey=c5e3fa46c199ae2f03e00d0ed57663cf");
 
 
-        } else {
-            Toast.makeText(this, "Not Connected", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+        {
+            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -151,10 +153,14 @@ public class MainActivity extends AppCompatActivity {
             if (tracks.size() > 0) {
                 track_list = tracks;
                 Log.d("DEMO", track_list.toString());
+
+                TrackAdapter adapter = new TrackAdapter(MainActivity.this, R.layout.track_list,track_list);
+                listView.setAdapter(adapter);
+
             } else {
                 Log.d("DEMO", "no data");
             }
         }
 
-    }
+}
 }
