@@ -1,3 +1,9 @@
+/*
+ * Assignment - InClass07
+ * Filename - TrackAdapter.java
+ * Fullname - Priya Patel & Pallav Jhaveri
+ *
+ * */
 package com.example.musixmatchtracksearch;
 
 import android.content.Context;
@@ -10,7 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TrackAdapter extends ArrayAdapter<Tracks> {
@@ -27,7 +37,6 @@ public class TrackAdapter extends ArrayAdapter<Tracks> {
             ViewHolder viewHolder;
 
            if(convertView == null){
-//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.track_list,parent,false);
                convertView = LayoutInflater.from(getContext()).inflate(R.layout.track_list,parent,false);
 
                viewHolder = new ViewHolder();
@@ -41,10 +50,12 @@ public class TrackAdapter extends ArrayAdapter<Tracks> {
                viewHolder = (ViewHolder) convertView.getTag();
             }
 
+           String[] date = track.updated_time.split("T");
+
            viewHolder.textViewTrack.setText(track.track_name);
            viewHolder.textViewArtist.setText(track.artist_name);
            viewHolder.textViewAlbum.setText(track.album_name);
-           viewHolder.textViewDate.setText(track.updated_time);
+           viewHolder.textViewDate.setText(date[0]);
 
            return convertView;
    }

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+
+* Assignment - InClass07
+* Filename - activity_main.xml
+* Fullname - Priya Patel & Pallav Jhaveri
+
+-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -39,7 +46,7 @@
         android:layout_height="16dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewLimit"
-        app:layout_constraintStart_toEndOf="@+id/textViewLimit"
+        app:layout_constraintStart_toEndOf="@+id/tvSBVal"
         app:layout_constraintTop_toTopOf="@+id/textViewLimit"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -109,4 +116,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewResults" />
+
+    <TextView
+        android:id="@+id/tvSBVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/sbVal"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewLimit"
+        app:layout_constraintStart_toEndOf="@+id/textViewLimit"
+        app:layout_constraintTop_toTopOf="@+id/textViewLimit"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

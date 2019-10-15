@@ -1,3 +1,9 @@
+/*
+ * Assignment - InClass07
+ * Filename - Tracks.java
+ * Fullname - Priya Patel & Pallav Jhaveri
+ *
+ * */
 package com.example.musixmatchtracksearch;
 
 public class Tracks {
