@@ -78,8 +78,8 @@
             android:id="@+id/radioButtonTrack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/rbTrack" />
+            android:text="@string/rbTrack"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/radioButtonArtist"

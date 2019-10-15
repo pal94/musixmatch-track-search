@@ -9,13 +9,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.util.Log;
-import android.widget.ListView;
-
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
