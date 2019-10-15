@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(TAG, "onCreate: ");
         listView = findViewById(R.id.listView);
 
 
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Tracks> tracks) {
+        protected void onPostExecute(final ArrayList<Tracks> tracks) {
 
             if (tracks.size() > 0) {
                 track_list = tracks;
@@ -156,6 +159,15 @@ public class MainActivity extends AppCompatActivity {
 
                 TrackAdapter adapter = new TrackAdapter(MainActivity.this, R.layout.track_list,track_list);
                 listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Tracks t =tracks.get(position);
+                        Intent i = new Intent(MainActivity.this, WebViewMusic.class);
+                        i.putExtra("URL", t.track_share_url);
+                        startActivity(i);
+                    }
+                });
 
             } else {
                 Log.d("DEMO", "no data");
