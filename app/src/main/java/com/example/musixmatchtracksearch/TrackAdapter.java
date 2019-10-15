@@ -27,8 +27,10 @@ public class TrackAdapter extends ArrayAdapter<Tracks> {
             ViewHolder viewHolder;
 
            if(convertView == null){
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.track_list,parent,false);
-                viewHolder = new ViewHolder();
+//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.track_list,parent,false);
+               convertView = LayoutInflater.from(getContext()).inflate(R.layout.track_list,parent,false);
+
+               viewHolder = new ViewHolder();
                 viewHolder.textViewTrack = convertView.findViewById(R.id.textView4);
                 viewHolder.textViewArtist = convertView.findViewById(R.id.textViewArtistValue);
                 viewHolder.textViewAlbum = convertView.findViewById(R.id.textViewAlbumValue);

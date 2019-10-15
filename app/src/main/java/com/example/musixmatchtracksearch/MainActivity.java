@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(TAG, "onCreate: ");
         listView = findViewById(R.id.listView);
 
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d(TAG, "seekbar val: "+sb.getProgress()+" Radio selected "+radioButton.getText() + "search "+search.getText().toString());
 
-                    new GetMusicData().execute("https://newsapi.org/v2/sources?apiKey=f820982a73524d00bf2c0870568c7706");
+                    new GetMusicData().execute("http://api.musixmatch.com/ws/1.1/track.search?apikey=f556b79ce385b8b5b25251e934e15649");
 
 
                 }
