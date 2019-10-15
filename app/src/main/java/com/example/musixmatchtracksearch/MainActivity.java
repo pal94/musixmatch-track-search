@@ -145,9 +145,14 @@ public class MainActivity extends AppCompatActivity {
             if (tracks.size() > 0) {
                 track_list = tracks;
                 Log.d("DEMO", track_list.toString());
+
+                TrackAdapter adapter = new TrackAdapter(MainActivity.this, R.layout.track_list,track_list);
+                listView.setAdapter(adapter);
+
             } else {
                 Log.d("DEMO", "no data");
             }
         }
 
+}
 }
