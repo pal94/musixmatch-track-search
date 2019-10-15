@@ -11,14 +11,15 @@
         android:layout_width="281dp"
         android:layout_height="50dp"
         android:ems="10"
-        android:hint="Type here"
         android:inputType="textPersonName"
         android:text=""
+        android:hint="Type here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.057"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/textViewLimit"

@@ -8,12 +8,14 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.util.Log;
+import android.widget.ListView;
+
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
@@ -28,6 +30,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    String TAG = "demo";
+    SeekBar sb;
+    RadioGroup rg;
+    EditText search;
 
     Tracks track;
     ListView lvMusic;
@@ -41,20 +47,43 @@ public class MainActivity extends AppCompatActivity {
         lvMusic = findViewById(R.id.lvmusic);
 
 
-        if(isConnected())
-        {
+        search = findViewById(R.id.editText);
+
+        sb = findViewById(R.id.seekBar);
+        sb.setMax(25);
+        sb.setMin(5);
+
+        rg = (RadioGroup) findViewById(R.id.radioGroup);
+        final String[] radioValue = new String[1];
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = findViewById(checkedId);
+                radioValue[0] = rb.getText().toString();
+                Log.d(TAG, "onCheckedChanged: " + checkedId);
+            }
+        });
+
+
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "seekbar val: " + sb.getProgress() + " Radio selected " + radioValue[0] + "search " + search.getText().toString());
+            }
+        });
+
+        if (isConnected()) {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
             new GetMusicData().execute("http://api.musixmatch.com/ws/1.1/track.search?apikey=c5e3fa46c199ae2f03e00d0ed57663cf");
 
 
-        }
-        else
-        {
+        } else {
             Toast.makeText(this, "Not Connected", Toast.LENGTH_SHORT).show();
         }
 
 
     }
+
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -66,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private class GetMusicData extends AsyncTask<String, Void, ArrayList<Tracks>>{
+    private class GetMusicData extends AsyncTask<String, Void, ArrayList<Tracks>> {
 
         @Override
         protected ArrayList<Tracks> doInBackground(String... strings) {
@@ -85,17 +114,17 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray trackslist = body.getJSONArray("track_list");
 
 
-                    for (int i=0;i<trackslist.length();i++) {
+                    for (int i = 0; i < trackslist.length(); i++) {
 
                         JSONObject sourceJson = trackslist.getJSONObject(i);
                         JSONObject trackobject = sourceJson.getJSONObject("track");
 
                         track = new Tracks();
-                        track.track_name=trackobject.getString("track_name");
-                        track.album_name=trackobject.getString("album_name");
-                        track.artist_name=trackobject.getString("artist_name");
-                        track.updated_time=trackobject.getString("updated_time");
-                        track.track_share_url=trackobject.getString("track_share_url");
+                        track.track_name = trackobject.getString("track_name");
+                        track.album_name = trackobject.getString("album_name");
+                        track.artist_name = trackobject.getString("artist_name");
+                        track.updated_time = trackobject.getString("updated_time");
+                        track.track_share_url = trackobject.getString("track_share_url");
                         result.add(track);
 
                     }
@@ -117,16 +146,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Tracks> tracks) {
 
-            if(tracks.size()>0)
-            {
-                track_list=tracks;
-                Log.d("DEMO",track_list.toString());
-            }
-            else
-            {
+            if (tracks.size() > 0) {
+                track_list = tracks;
+                Log.d("DEMO", track_list.toString());
+            } else {
                 Log.d("DEMO", "no data");
             }
         }
-    }
 
+    }
 }
