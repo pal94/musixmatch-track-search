@@ -7,6 +7,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
@@ -23,16 +30,23 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     Tracks track;
+    ListView lvMusic;
+    ArrayList<Tracks> track_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        lvMusic = findViewById(R.id.lvmusic);
+
+
         if(isConnected())
         {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-            //new GetAsyncData().execute("https://newsapi.org/v2/sources?apiKey=f820982a73524d00bf2c0870568c7706");
+            new GetMusicData().execute("http://api.musixmatch.com/ws/1.1/track.search?apikey=c5e3fa46c199ae2f03e00d0ed57663cf");
+
+
         }
         else
         {
@@ -66,18 +80,22 @@ public class MainActivity extends AppCompatActivity {
                     String json = IOUtils.toString(connection.getInputStream(), "UTF8");
 
                     JSONObject root = new JSONObject(json);
-                    JSONArray sources = root.getJSONArray("track");
+                    JSONObject message = root.getJSONObject("message");
+                    JSONObject body = message.getJSONObject("body");
+                    JSONArray trackslist = body.getJSONArray("track_list");
 
-                    for (int i=0;i<sources.length();i++) {
 
-                        JSONObject sourceJson = sources.getJSONObject(i);
+                    for (int i=0;i<trackslist.length();i++) {
+
+                        JSONObject sourceJson = trackslist.getJSONObject(i);
+                        JSONObject trackobject = sourceJson.getJSONObject("track");
 
                         track = new Tracks();
-                        track.track_name=sourceJson.getString("track_name");
-                        track.album_name=sourceJson.getString("album_name");
-                        track.artist_name=sourceJson.getString("artist_name");
-                        track.updated_time=sourceJson.getString("updated_time");
-                        track.track_share_url=sourceJson.getString("track_share_url");
+                        track.track_name=trackobject.getString("track_name");
+                        track.album_name=trackobject.getString("album_name");
+                        track.artist_name=trackobject.getString("artist_name");
+                        track.updated_time=trackobject.getString("updated_time");
+                        track.track_share_url=trackobject.getString("track_share_url");
                         result.add(track);
 
                     }
@@ -95,6 +113,20 @@ public class MainActivity extends AppCompatActivity {
             }
             return result;
         }
+
+        @Override
+        protected void onPostExecute(ArrayList<Tracks> tracks) {
+
+            if(tracks.size()>0)
+            {
+                track_list=tracks;
+                Log.d("DEMO",track_list.toString());
+            }
+            else
+            {
+                Log.d("DEMO", "no data");
+            }
         }
+    }
 
 }

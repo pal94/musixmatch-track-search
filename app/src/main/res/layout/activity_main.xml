@@ -11,9 +11,9 @@
         android:layout_width="281dp"
         android:layout_height="50dp"
         android:ems="10"
+        android:hint="Type here"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="Type here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +77,8 @@
             android:id="@+id/radioButtonTrack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/rbTrack"
-            android:checked="true"/>
+            android:checked="true"
+            android:text="@string/rbTrack" />
 
         <RadioButton
             android:id="@+id/radioButtonArtist"
@@ -100,9 +100,11 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <ListView
-        android:layout_width="match_parent"
+        android:id="@+id/lvmusic"
+        android:layout_width="0dp"
         android:layout_height="353dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewResults"
-        tools:layout_editor_absoluteX="3dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewResults" />
 </androidx.constraintlayout.widget.ConstraintLayout>
